@@ -47,13 +47,10 @@
         <div class="feedback-content">
             <button class="close-modal" onclick="closeFeedback()">&times;</button>
             <h2>Feedback?</h2>
-            <form class="feedback-form" action="https://formsubmit.co/el/xoweji" method="POST">
-                <input type="hidden" name="_subject" value="Emotion Identifier Feedback">
-                <input type="hidden" name="_next" value="https://emotion-labeling.pages.dev">
-                <input type="hidden" name="_captcha" value="false">
-                <textarea name="message" id="feedbackText" placeholder="What do you think about this app? How can we improve it?"></textarea>
-                <button type="submit">Submit</button>
-            </form>
+            <div class="feedback-form">
+                <textarea id="feedbackText" placeholder="What do you think about this app? How can we improve it?"></textarea>
+                <button onclick="submitFeedback()">Submit</button>
+            </div>
             <div class="feedback-success" id="feedbackSuccess">
                 Thank you for your feedback. Have a nice day!
             </div>
@@ -142,20 +139,37 @@
             }, 3000);
         }
 
-        // Wait for DOM to be ready
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('.feedback-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Prevent immediate form submission
-                    showToast();
-                    setTimeout(() => {
-                        closeFeedback();
-                        form.submit(); // Submit the form after showing toast
-                    }, 500);
+        async function submitFeedback() {
+            const feedback = document.getElementById('feedbackText').value;
+            if (!feedback.trim()) return;
+
+            try {
+                const response = await fetch('https://feedback-api.emotion-labeling.workers.dev/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        feedback,
+                        timestamp: new Date().toISOString(),
+                        url: window.location.href
+                    })
                 });
+
+                if (!response.ok) {
+                    throw new Error('Failed to send feedback');
+                }
+
+                showToast();
+                document.getElementById('feedbackText').value = '';
+                setTimeout(() => {
+                    closeFeedback();
+                }, 500);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send feedback. Please try again.');
             }
-        });
+        }
     </script>
 </body>
 </html>
