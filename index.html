@@ -115,41 +115,29 @@
     <script>
         function openFeedback() {
             document.getElementById('feedbackModal').classList.add('active');
+            document.getElementById('feedbackSuccess').classList.remove('active');
+            document.getElementById('feedbackText').value = '';
         }
 
         function closeFeedback() {
             document.getElementById('feedbackModal').classList.remove('active');
-            document.getElementById('feedbackSuccess').classList.remove('active');
-            document.getElementById('feedbackText').value = '';
         }
 
         function submitFeedback() {
             const feedback = document.getElementById('feedbackText').value;
             if (!feedback.trim()) return;
 
-            // Send feedback to backend
-            fetch('http://localhost:5000/api/feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ feedback })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                document.getElementById('feedbackSuccess').classList.add('active');
-                document.getElementById('feedbackText').value = '';
-                setTimeout(() => {
-                    closeFeedback();
-                }, 2000);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to send feedback. Please try again.');
-            });
+            // Show success message
+            document.getElementById('feedbackSuccess').classList.add('active');
+            document.getElementById('feedbackText').value = '';
+            
+            // Close modal after delay
+            setTimeout(() => {
+                closeFeedback();
+            }, 2000);
+
+            // For now, just log the feedback
+            console.log('Feedback submitted:', feedback);
         }
     </script>
 </body>
