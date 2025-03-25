@@ -47,10 +47,12 @@
         <div class="feedback-content">
             <button class="close-modal" onclick="closeFeedback()">&times;</button>
             <h2>Feedback?</h2>
-            <div class="feedback-form">
-                <textarea id="feedbackText" placeholder="What do you think about this app? How can we improve it?"></textarea>
-                <button onclick="submitFeedback()">Submit</button>
-            </div>
+            <form class="feedback-form" action="https://formsubmit.co/benoit.devilliers888+emotionlabeling@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Emotion Identifier Feedback">
+                <input type="hidden" name="_next" value="https://emotion-labeling.pages.dev">
+                <textarea name="message" id="feedbackText" placeholder="What do you think about this app? How can we improve it?"></textarea>
+                <button type="submit">Submit</button>
+            </form>
             <div class="feedback-success" id="feedbackSuccess">
                 Thank you for your feedback. Have a nice day!
             </div>
@@ -121,23 +123,6 @@
 
         function closeFeedback() {
             document.getElementById('feedbackModal').classList.remove('active');
-        }
-
-        function submitFeedback() {
-            const feedback = document.getElementById('feedbackText').value;
-            if (!feedback.trim()) return;
-
-            // Show success message
-            document.getElementById('feedbackSuccess').classList.add('active');
-            document.getElementById('feedbackText').value = '';
-            
-            // Close modal after delay
-            setTimeout(() => {
-                closeFeedback();
-            }, 2000);
-
-            // For now, just log the feedback
-            console.log('Feedback submitted:', feedback);
         }
     </script>
 </body>
