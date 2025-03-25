@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Identifier</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <top-level-emotions 
+            :is-active="currentScreen === 'level1'"
+            @emotion-selected="handleLevel1Selection">
+        </top-level-emotions>
+
+        <level2-emotions 
+            :is-active="currentScreen === 'level2'"
+            :parent-emotion="selectedEmotion"
+            @emotion-selected="handleLevel2Selection"
+            @go-back="goBackToLevel1">
+        </level2-emotions>
+
+        <level3-emotions 
+            :is-active="currentScreen === 'level3'"
+            :parent-emotion="selectedLevel2Emotion"
+            @emotion-selected="handleLevel3Selection"
+            @go-back="goBackToLevel2">
+        </level3-emotions>
+
+        <emotion-description 
+            :is-active="currentScreen === 'description'"
+            :emotion="selectedLevel3Emotion"
+            @go-back="goBackToLevel3">
+        </emotion-description>
+    </div>
+
+    <script type="module">
+        import TopLevelEmotions from './components/TopLevelEmotions.js';
+        import Level2Emotions from './components/Level2Emotions.js';
+        import Level3Emotions from './components/Level3Emotions.js';
+        import EmotionDescription from './components/EmotionDescription.js';
+
+        const app = Vue.createApp({
+            components: {
+                TopLevelEmotions,
+                Level2Emotions,
+                Level3Emotions,
+                EmotionDescription
+            },
+            data() {
+                return {
+                    currentScreen: 'level1',
+                    selectedEmotion: '',
+                    selectedLevel2Emotion: '',
+                    selectedLevel3Emotion: ''
+                }
+            },
+            methods: {
+                handleLevel1Selection(emotion) {
+                    console.log('Level 1 selected:', emotion);
+                    this.selectedEmotion = emotion;
+                    this.currentScreen = 'level2';
+                },
+                handleLevel2Selection(emotion) {
+                    console.log('Level 2 selected:', emotion);
+                    this.selectedLevel2Emotion = emotion;
+                    this.currentScreen = 'level3';
+                },
+                handleLevel3Selection(emotion) {
+                    console.log('Level 3 selected:', emotion);
+                    this.selectedLevel3Emotion = emotion;
+                    this.currentScreen = 'description';
+                },
+                goBackToLevel1() {
+                    this.currentScreen = 'level1';
+                    this.selectedLevel2Emotion = '';
+                    this.selectedLevel3Emotion = '';
+                },
+                goBackToLevel2() {
+                    this.currentScreen = 'level2';
+                    this.selectedLevel3Emotion = '';
+                },
+                goBackToLevel3() {
+                    this.currentScreen = 'level3';
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

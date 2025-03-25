@@ -1,0 +1,80 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.emotion-button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+    font-size: 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.emotion-button:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.back-button {
+    background-color: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    color: #333;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.emotion-description {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
