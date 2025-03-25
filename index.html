@@ -128,8 +128,6 @@
     <script>
         function openFeedback() {
             document.getElementById('feedbackModal').classList.add('active');
-            document.getElementById('feedbackSuccess').classList.remove('active');
-            document.getElementById('feedbackText').value = '';
         }
 
         function closeFeedback() {
@@ -144,12 +142,19 @@
             }, 3000);
         }
 
-        // Handle form submission
-        document.querySelector('.feedback-form').addEventListener('submit', function(e) {
-            showToast();
-            setTimeout(() => {
-                closeFeedback();
-            }, 500);
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.feedback-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent immediate form submission
+                    showToast();
+                    setTimeout(() => {
+                        closeFeedback();
+                        form.submit(); // Submit the form after showing toast
+                    }, 500);
+                });
+            }
         });
     </script>
 </body>
