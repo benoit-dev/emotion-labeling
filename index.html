@@ -127,24 +127,16 @@
             const feedback = document.getElementById('feedbackText').value;
             if (!feedback.trim()) return;
 
-            // Replace this URL with your Google Form submission URL
-            const formUrl = 'YOUR_GOOGLE_FORM_URL';
-            
-            // Send feedback to Google Form
-            fetch(formUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `entry.XXXXX=${encodeURIComponent(feedback)}` // Replace XXXXX with your form field ID
-            }).then(() => {
-                document.getElementById('feedbackSuccess').classList.add('active');
-                document.getElementById('feedbackText').value = '';
-                setTimeout(() => {
-                    closeFeedback();
-                }, 2000);
-            });
+            // Create mailto link with feedback
+            const subject = encodeURIComponent("Emotion Identifier Feedback");
+            const body = encodeURIComponent(feedback);
+            window.location.href = `mailto:benoitdevilliers@gmail.com?subject=${subject}&body=${body}`;
+
+            // Show success message and close modal
+            document.getElementById('feedbackSuccess').classList.add('active');
+            setTimeout(() => {
+                closeFeedback();
+            }, 2000);
         }
     </script>
 </body>
