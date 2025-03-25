@@ -60,6 +60,16 @@
         </div>
     </div>
 
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Thank you for your feedback!</span>
+        </div>
+    </div>
+
     <script type="module">
         import TopLevelEmotions from './components/TopLevelEmotions.js';
         import Level2Emotions from './components/Level2Emotions.js';
@@ -125,6 +135,22 @@
         function closeFeedback() {
             document.getElementById('feedbackModal').classList.remove('active');
         }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle form submission
+        document.querySelector('.feedback-form').addEventListener('submit', function(e) {
+            showToast();
+            setTimeout(() => {
+                closeFeedback();
+            }, 500);
+        });
     </script>
 </body>
 </html>
