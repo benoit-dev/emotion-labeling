@@ -36,6 +36,27 @@
         </emotion-description>
     </div>
 
+    <button class="feedback-button" onclick="openFeedback()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Feedback
+    </button>
+
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-content">
+            <button class="close-modal" onclick="closeFeedback()">&times;</button>
+            <h2>Share Your Feedback</h2>
+            <div class="feedback-form">
+                <textarea id="feedbackText" placeholder="How can we improve the emotion identifier? Any suggestions or issues?"></textarea>
+                <button onclick="submitFeedback()">Submit Feedback</button>
+            </div>
+            <div class="feedback-success" id="feedbackSuccess">
+                Thank you for your feedback!
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import TopLevelEmotions from './components/TopLevelEmotions.js';
         import Level2Emotions from './components/Level2Emotions.js';
@@ -89,6 +110,42 @@
         });
 
         app.mount('#app');
+    </script>
+
+    <script>
+        function openFeedback() {
+            document.getElementById('feedbackModal').classList.add('active');
+        }
+
+        function closeFeedback() {
+            document.getElementById('feedbackModal').classList.remove('active');
+            document.getElementById('feedbackSuccess').classList.remove('active');
+            document.getElementById('feedbackText').value = '';
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedbackText').value;
+            if (!feedback.trim()) return;
+
+            // Replace this URL with your Google Form submission URL
+            const formUrl = 'YOUR_GOOGLE_FORM_URL';
+            
+            // Send feedback to Google Form
+            fetch(formUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `entry.XXXXX=${encodeURIComponent(feedback)}` // Replace XXXXX with your form field ID
+            }).then(() => {
+                document.getElementById('feedbackSuccess').classList.add('active');
+                document.getElementById('feedbackText').value = '';
+                setTimeout(() => {
+                    closeFeedback();
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
