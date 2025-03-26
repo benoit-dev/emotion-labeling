@@ -1,0 +1,4 @@
+# No build needed - serve files directly
+[build]
+command = ""
+output_directory = "."
