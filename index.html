@@ -156,8 +156,11 @@
                     })
                 });
 
+                const data = await response.json();
+                console.log('Response:', data);
+
                 if (!response.ok) {
-                    throw new Error('Failed to send feedback');
+                    throw new Error(`Failed to send feedback: ${JSON.stringify(data)}`);
                 }
 
                 showToast();
@@ -166,8 +169,8 @@
                     closeFeedback();
                 }, 500);
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to send feedback. Please try again.');
+                console.error('Error details:', error);
+                alert('Failed to send feedback. Please try again. Check console for details.');
             }
         }
     </script>
